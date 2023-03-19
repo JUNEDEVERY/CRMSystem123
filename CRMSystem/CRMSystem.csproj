@@ -64,7 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DB.cs" />
+    <Compile Include="class\DB.cs" />
     <Compile Include="Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -141,11 +141,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.jpg" />
+    <Resource Include="resources\logo.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="window\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -157,9 +155,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="image.ico" />
-    <Resource Include="update.png" />
-    <Content Include="updateCode.png" />
+    <Resource Include="resources\image.ico" />
+    <Resource Include="resources\update.png" />
+    <Content Include="resources\updateCode.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
