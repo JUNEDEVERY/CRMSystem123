@@ -36,19 +36,19 @@
                 <TextBox x:Name="tbPassword" KeyDown="tbPassword_KeyDown" Width="100"></TextBox>
 
             </StackPanel>
-            <StackPanel Name="stackCode" Visibility="Collapsed" Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
+            <StackPanel Name="stackCode" Visibility="Visible" Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
                 <TextBlock FontSize="20" Margin="0 0 15 0" Text="Код"/>
-                <TextBox x:Name="tbCode" Width="100" Height="25"></TextBox>
-                <Image x:Name="imgUpdate"   Source="/updateCode.png" Width="35" ></Image>
+                <TextBox x:Name="tbCode" KeyDown="tbCode_KeyDown" Width="100" Height="25"></TextBox>
+                <Image x:Name="imgUpdate"  MouseDown="imgUpdate_MouseDown" Width="35" Source="/update.png" ></Image>
             </StackPanel>
             
          
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-            <StackPanel Name="stackNewCode" Visibility="Collapsed"  Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
-                <TextBlock Name="tbNewCode" FontSize="20" Margin="0 0 15 0" />
-            </StackPanel>
-            <Button Background="#B5DEFA" Name="btnCancel" Content="Отмена" Height="25" Width="50" />
+        <TextBlock Name="tbNewCode" FontSize="20" Margin="0 0 15 0" Grid.Column="1" Grid.Row="2" />
+
+        <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            
+            <Button  Click="btnCancel_Click" Background="#B5DEFA" Name="btnCancel" Content="Отмена" Height="25" Width="50" />
             <Button Background="#B5DEFA" Click="btnEntry_Click"  Name="btnEntry" Content="Вход"  Height="25" Width="50" Margin="15 0 0 0" />
         </StackPanel>
     </Grid>

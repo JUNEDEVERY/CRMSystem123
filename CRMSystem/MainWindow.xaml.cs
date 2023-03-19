@@ -22,8 +22,9 @@ namespace CRMSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-        Employees employees1;
+
         private DispatcherTimer dispatcher;
+        public static string code = "";
         private int counter = 10;
         public MainWindow()
         {
@@ -37,23 +38,32 @@ namespace CRMSystem
 
 
         }
+        /// <summary>
+        ///  Метод таймера, считающий отсчет 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerEnd(object sender, EventArgs e)
         {
             try
             {
                 if (counter != 0)
                 {
-                    tbNewCode.Text = "Новый код доступен через \n\t" + string.Format("00:0{0}:{1}", counter / 60, counter % 60) + " секунд ";
+                    tbNewCode.Visibility = Visibility.Visible;
+                    tbNewCode.Text = "Оставшееся время для ввода кода \n\t" + string.Format("00:0{0}:{1}", counter / 60, counter % 60) + " секунд ";
 
 
                 }
                 else
                 {
-
+                    tbNewCode.Visibility = Visibility.Visible;
+                    stackCode.Visibility = Visibility.Visible;
+                    imgUpdate.Visibility = Visibility.Visible;
                     dispatcher.Stop();
+                    code = "";
+                    tbNewCode.Text = "Код не действителен. ";
                     
-                    tbNewCode.Text = "Код не действителен. Запросите повторную отправку кода";
-                  
+
                 }
                 counter--;
 
@@ -74,19 +84,7 @@ namespace CRMSystem
 
         private void btnEntry_Click(object sender, RoutedEventArgs e)
         {
-            // List<Employees> list = new List<Employees>();
-
-
-            //List<Employees> employees = DB.tbe.Employees.ToList();
-            //if (employees. == tbNumber.Text)
-            ////{
-            //    tbCode.Visibility = Visibility.Visible;
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("нет");
-            //}
+            
         }
 
         private void tbNumber_KeyDown(object sender, KeyEventArgs e)
@@ -116,44 +114,36 @@ namespace CRMSystem
 
             }
         }
-        private void checkedPassword()
-        {
-            if (Regex.IsMatch(tbPassword.Text, @"(?=.[0-9]){1,}"))
-            {
 
-            }
-            else
-            {
-                MessageBox.Show("В пароле должна быть хотя бы одна цифра");
-            }
-        }
-        public static int countOutput = 0;
-        public static string successfullyCode = "";
+
         void generateCode()
         {
             List<Employees> list1 = DB.tbe.Employees.Where(x => x.Number == tbNumber.Text && x.Password == tbPassword.Text).ToList();
+
             if (list1.Count == 1)
             {
                 while (true)
                 {
                     Random random = new Random();
+                    Regex regex = new Regex($"^[0-9a-zA-Z`~!@#$%^&*()_\\-+={{}}\\[\\]\\|:;\"'<>,.?\\/]{{8}}$"); // Регулярное выражение для проверки корректности сгенерированого кода
+
                     for (int i = 0; i < 8; i++)
                     {
                         int j = random.Next(4); // Выбор 0 - число; 1, 2 - буква; 2 - спецсимвол
                         if (j == 0)
                         {
-                            successfullyCode +=  random.Next(9).ToString();
+                            code += random.Next(9).ToString();
                         }
                         else if (j == 1 || j == 2)
                         {
                             int l = random.Next(2); // Выбор 0 - заглавная; 1 - маленькая буква
                             if (l == 0)
                             {
-                                successfullyCode += (char)random.Next('A', 'Z' + 1);
+                                code += (char)random.Next('A', 'Z' + 1);
                             }
                             else
                             {
-                                successfullyCode += (char)random.Next('a', 'z' + 1);
+                                code += (char)random.Next('a', 'z' + 1);
                             }
                         }
                         else
@@ -161,37 +151,46 @@ namespace CRMSystem
                             int l = random.Next(4); // Выбор диапозона
                             if (l == 0)
                             {
-                                successfullyCode += (char)random.Next(33, 48);
+                                code += (char)random.Next(33, 48);
                             }
                             else if (l == 1)
                             {
-                                successfullyCode += (char)random.Next(58, 65);
+                                code += (char)random.Next(58, 65);
                             }
                             else if (l == 2)
                             {
-                                successfullyCode += (char)random.Next(91, 97);
+                                code += (char)random.Next(91, 97);
                             }
                             else if (l == 3)
                             {
-                                successfullyCode += (char)random.Next(123, 127);
+                                code += (char)random.Next(123, 127);
                             }
                         }
                     }
 
-                    //if (regex.IsMatch(successfullyCode)) ;
-                    //{
-                    //    break;
-                    //}
+                    if (regex.IsMatch(code))
+                    {
+                        break;
+                    }
                 }
-                MessageBox.Show("Код для доступа " + successfullyCode + "\nУ вас будет дано 10 секунд, чтобы ввести код");
+                MessageBox.Show("Код для доступа " + code + "\nУ вас будет дано 10 секунд, чтобы ввести код");
 
-               
-              
-              
+
+
+                stackCode.Visibility = Visibility.Visible;
                 counter = 10;
                 dispatcher.Start();
+
             }
-                
+            else
+            {
+                MessageBox.Show("Сотрудник с таким номером и паролем не найден!");
+                dispatcher.Stop();
+                tbNewCode.Text = "";
+                tbNewCode.IsEnabled = false;
+                tbNewCode.Text = "";
+            }
+
 
         }
         private void tbPassword_KeyDown(object sender, KeyEventArgs e)
@@ -200,6 +199,8 @@ namespace CRMSystem
             {
                 if (!string.IsNullOrEmpty(tbPassword.Text))
                 {
+                    stackCode.Visibility = Visibility.Visible;
+                    imgUpdate.Visibility = Visibility.Visible;
                     tbCode.Visibility = Visibility.Visible;
                     tbCode.Focus();
                     tbCode.Text = "";
@@ -207,6 +208,74 @@ namespace CRMSystem
                 }
             }
         }
+
+        private void imgUpdate_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            tbCode.Text = "";
+            code = "";
+            generateCode();
+        }
+        void log()
+        {
+            if (code != "")
+
+            {
+                if (tbCode.Text == code)
+                {
+                    dispatcher.Stop();
+                    tbNewCode.Text = "";
+                    code = "";
+                    Employees employee = DB.tbe.Employees.FirstOrDefault(x => x.Number == tbNumber.Text && x.Password == tbPassword.Text);
+                    if (employee != null)
+                    {
+                        MessageBox.Show("Вы успешно авторизовались с ролью " + employee.RoleTable.role);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Сотрудник с таким номером и паролем не найден!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Неверно введен код!");
+                }
+
+            }
+
+
+
+            else
+            {
+                MessageBox.Show("Поле код пустое. Возможно вы ничего не ввели");
+            }
+        }
+        private void tbCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                log();
+
+
+            }
+
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            tbNumber.Text = "";
+            tbPassword.Text = "";
+            tbCode.Text = "";
+            dispatcher.Stop();
+            code = "";
+            tbNewCode.Text = "";
+            tbPassword.Visibility = Visibility.Collapsed;
+            tbCode.Visibility = Visibility.Collapsed;
+            stackPassword.Visibility = Visibility.Collapsed;
+            btnEntry.Visibility = Visibility.Collapsed;
+            imgUpdate.Visibility = Visibility.Collapsed;
+            stackCode.Visibility = Visibility.Collapsed;
+          
+        }
     }
-    
+
 }
