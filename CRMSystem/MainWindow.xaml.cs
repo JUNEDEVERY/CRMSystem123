@@ -73,7 +73,7 @@ namespace CRMSystem
                     dispatcher.Stop();
                     code = "";
                     tbNewCode.Text = "Код не действителен";
-                    
+
 
                 }
                 counter--;
@@ -95,7 +95,7 @@ namespace CRMSystem
 
         private void btnEntry_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void tbNumber_KeyDown(object sender, KeyEventArgs e)
@@ -139,14 +139,14 @@ namespace CRMSystem
 
                     for (int i = 0; i < 8; i++)
                     {
-                        int j = random.Next(4); // Выбор 0 - число; 1, 2 - буква; 2 - спецсимвол
+                        int j = random.Next(4);
                         if (j == 0)
                         {
                             code += random.Next(9).ToString();
                         }
                         else if (j == 1 || j == 2)
                         {
-                            int l = random.Next(2); // Выбор 0 - заглавная; 1 - маленькая буква
+                            int l = random.Next(2);
                             if (l == 0)
                             {
                                 code += (char)random.Next('A', 'Z' + 1);
@@ -158,7 +158,7 @@ namespace CRMSystem
                         }
                         else
                         {
-                            int l = random.Next(4); // Выбор диапозона
+                            int l = random.Next(4);
                             if (l == 0)
                             {
                                 code += (char)random.Next(33, 48);
@@ -183,7 +183,7 @@ namespace CRMSystem
                         break;
                     }
                 }
-                MessageBox.Show("Код для доступа " + code + "\nУ вас будет дано 10 секунд, чтобы ввести код");
+                MessageBox.Show("Код для доступа " + code + "\nКод действителен в течении 10 секунд.");
 
 
 
@@ -194,11 +194,12 @@ namespace CRMSystem
             }
             else
             {
-                MessageBox.Show("Сотрудник с таким номером и паролем не найден!");
                 dispatcher.Stop();
                 tbNewCode.Text = "";
                 tbNewCode.IsEnabled = false;
                 tbNewCode.Text = "";
+                MessageBox.Show("Сотрудник с таким номером и паролем не найден!");
+
             }
 
 
@@ -238,31 +239,28 @@ namespace CRMSystem
                     Employees employee = DB.tbe.Employees.FirstOrDefault(x => x.Nomer == tbNumber.Text && x.Password == tbPassword.Text);
                     if (employee != null)
                     {
-                        MessageBox.Show("Вы успешно авторизовались с ролью <<" + employee.Roles.Role+">>");
+                        MessageBox.Show("Вы успешно авторизовались с ролью <<" + employee.Roles.Role + ">>");
                         tbNumber.Text = "";
                         tbPassword.Text = "";
                         tbCode.Text = "";
                         stackCode.Visibility = Visibility.Collapsed;
                         stackPassword.Visibility = Visibility.Collapsed;
-                        btnEntry.Visibility = Visibility.Collapsed; 
+                        btnEntry.Visibility = Visibility.Collapsed;
                         tbPassword.Visibility = Visibility.Collapsed;
 
 
                     }
                     else
                     {
-                        MessageBox.Show("Сотрудник с таким номером и паролем не найден!");
+                        MessageBox.Show("Отсутствует сотрудник в соответствии с веденными данными.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Неверно введен код!");
+                    MessageBox.Show("Неверный код");
                 }
 
             }
-
-
-
             else
             {
                 MessageBox.Show("Поле код пустое. Возможно вы ничего не ввели");
@@ -293,7 +291,7 @@ namespace CRMSystem
             btnEntry.Visibility = Visibility.Collapsed;
             imgUpdate.Visibility = Visibility.Collapsed;
             stackCode.Visibility = Visibility.Collapsed;
-          
+
         }
     }
 
