@@ -15,41 +15,33 @@ namespace CRMSystem
 using System;
     using System.Collections.Generic;
     
-public partial class Employees
+public partial class ServiceTypes
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Employees()
+    public ServiceTypes()
     {
 
-        this.EquipmentInstallations = new HashSet<EquipmentInstallations>();
+        this.CRM = new HashSet<CRM>();
+
+        this.KindsAndTypesService = new HashSet<KindsAndTypesService>();
 
     }
 
 
-    public int EmployeeID { get; set; }
+    public int ServiceTypeID { get; set; }
 
-    public string Surname { get; set; }
-
-    public string Name { get; set; }
-
-    public string Patronymic { get; set; }
-
-    public int RoleID { get; set; }
-
-    public string Nomer { get; set; }
-
-    public string Password { get; set; }
-
-    public string Image { get; set; }
+    public string ServiceType { get; set; }
 
 
-
-    public virtual Roles Roles { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<EquipmentInstallations> EquipmentInstallations { get; set; }
+    public virtual ICollection<CRM> CRM { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<KindsAndTypesService> KindsAndTypesService { get; set; }
 
 }
 

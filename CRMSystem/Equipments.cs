@@ -15,11 +15,11 @@ namespace CRMSystem
 using System;
     using System.Collections.Generic;
     
-public partial class Employees
+public partial class Equipments
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Employees()
+    public Equipments()
     {
 
         this.EquipmentInstallations = new HashSet<EquipmentInstallations>();
@@ -27,29 +27,25 @@ public partial class Employees
     }
 
 
-    public int EmployeeID { get; set; }
+    public int EquiomentID { get; set; }
 
-    public string Surname { get; set; }
+    public string EquiomentName { get; set; }
 
-    public string Name { get; set; }
+    public int TypeEquipmentID { get; set; }
 
-    public string Patronymic { get; set; }
+    public string InvertaryNumberOS { get; set; }
 
-    public int RoleID { get; set; }
+    public string MACAdress { get; set; }
 
-    public string Nomer { get; set; }
-
-    public string Password { get; set; }
-
-    public string Image { get; set; }
+    public string SerialNumber { get; set; }
 
 
-
-    public virtual Roles Roles { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<EquipmentInstallations> EquipmentInstallations { get; set; }
+
+    public virtual TypeEquioment TypeEquioment { get; set; }
 
 }
 

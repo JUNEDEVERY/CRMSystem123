@@ -24,6 +24,8 @@ namespace CRMSystem
     {
 
         private DispatcherTimer dispatcher;
+        Regex regex = new Regex($"^[0-9a-zA-Z`~!@#$%^&*()_\\-+={{}}\\[\\]\\|:;\"'<>,.?\\/]{{8}}$"); // Регулярное выражение для проверки корректности сгенерированого кода
+
         public static string code = "";
         private int counter = 10;
         public MainWindow()
@@ -49,8 +51,17 @@ namespace CRMSystem
             {
                 if (counter != 0)
                 {
+                    if (counter % 2 == 0)
+                    {
+                        tbNewCode.Foreground = Brushes.Red;
+
+                    }
+                    else
+                    {
+                        tbNewCode.Foreground = Brushes.Black;
+                    }
                     tbNewCode.Visibility = Visibility.Visible;
-                    tbNewCode.Text = "Оставшееся время для ввода кода \n\t" + string.Format("00:0{0}:{1}", counter / 60, counter % 60) + " секунд ";
+                    tbNewCode.Text = "Оставшееся время \n" + string.Format("00:0{0}:{1} ", counter / 60, counter % 60) + " секунд ";
 
 
                 }
@@ -61,7 +72,7 @@ namespace CRMSystem
                     imgUpdate.Visibility = Visibility.Visible;
                     dispatcher.Stop();
                     code = "";
-                    tbNewCode.Text = "Код не действителен. ";
+                    tbNewCode.Text = "Код не действителен";
                     
 
                 }
@@ -91,7 +102,7 @@ namespace CRMSystem
         {
             if (e.Key == Key.Enter)
             {
-                List<Employees> list1 = DB.tbe.Employees.Where(x => x.Number == tbNumber.Text).ToList();
+                List<Employees> list1 = DB.tbe.Employees.Where(x => x.Nomer == tbNumber.Text).ToList();
 
                 if (!string.IsNullOrEmpty(tbNumber.Text))
                 {
@@ -118,14 +129,13 @@ namespace CRMSystem
 
         void generateCode()
         {
-            List<Employees> list1 = DB.tbe.Employees.Where(x => x.Number == tbNumber.Text && x.Password == tbPassword.Text).ToList();
+            List<Employees> list1 = DB.tbe.Employees.Where(x => x.Nomer == tbNumber.Text && x.Password == tbPassword.Text).ToList();
 
             if (list1.Count == 1)
             {
                 while (true)
                 {
                     Random random = new Random();
-                    Regex regex = new Regex($"^[0-9a-zA-Z`~!@#$%^&*()_\\-+={{}}\\[\\]\\|:;\"'<>,.?\\/]{{8}}$"); // Регулярное выражение для проверки корректности сгенерированого кода
 
                     for (int i = 0; i < 8; i++)
                     {
@@ -225,10 +235,19 @@ namespace CRMSystem
                     dispatcher.Stop();
                     tbNewCode.Text = "";
                     code = "";
-                    Employees employee = DB.tbe.Employees.FirstOrDefault(x => x.Number == tbNumber.Text && x.Password == tbPassword.Text);
+                    Employees employee = DB.tbe.Employees.FirstOrDefault(x => x.Nomer == tbNumber.Text && x.Password == tbPassword.Text);
                     if (employee != null)
                     {
-                        MessageBox.Show("Вы успешно авторизовались с ролью " + employee.RoleTable.role);
+                        MessageBox.Show("Вы успешно авторизовались с ролью <<" + employee.Roles.Role+">>");
+                        tbNumber.Text = "";
+                        tbPassword.Text = "";
+                        tbCode.Text = "";
+                        stackCode.Visibility = Visibility.Collapsed;
+                        stackPassword.Visibility = Visibility.Collapsed;
+                        btnEntry.Visibility = Visibility.Collapsed; 
+                        tbPassword.Visibility = Visibility.Collapsed;
+
+
                     }
                     else
                     {

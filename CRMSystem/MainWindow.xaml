@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRMSystem"
         mc:Ignorable="d"
-        Icon="/image.ico"
+        Icon="resources/image.ico"
         Title="Телеком Нева Связь" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
             <TextBlock Text="Телеком Нева Связь" FontSize="25" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="0">
-            <Image HorizontalAlignment="Right" Source="/logo.jpg" Height="160" Width="300"></Image>
+            <Image HorizontalAlignment="Right" Source="resources/logo.jpg" Height="160" Width="300"></Image>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <StackPanel Loaded="StackPanel_Loaded" Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
@@ -36,15 +36,15 @@
                 <TextBox x:Name="tbPassword" KeyDown="tbPassword_KeyDown" Width="100"></TextBox>
 
             </StackPanel>
-            <StackPanel Name="stackCode" Visibility="Visible" Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
+            <StackPanel Name="stackCode" Visibility="Collapsed" Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
                 <TextBlock FontSize="20" Margin="0 0 15 0" Text="Код"/>
                 <TextBox x:Name="tbCode" KeyDown="tbCode_KeyDown" Width="100" Height="25"></TextBox>
-                <Image x:Name="imgUpdate"  MouseDown="imgUpdate_MouseDown" Width="35" Source="/update.png" ></Image>
+                <Image x:Name="imgUpdate"  MouseDown="imgUpdate_MouseDown" Width="35" Source="resources/update.png" ></Image>
             </StackPanel>
             
          
         </StackPanel>
-        <TextBlock Name="tbNewCode" FontSize="20" Margin="0 0 15 0" Grid.Column="1" Grid.Row="2" />
+        <TextBlock Name="tbNewCode" HorizontalAlignment="Center"  FontSize="20" Margin="0 0 15 0" Grid.Column="1" Grid.Row="2" />
 
         <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
             
